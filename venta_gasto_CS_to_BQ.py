@@ -17,7 +17,23 @@ DIC_FILE = {
     "Z1-Ventas actualizable COPA.parquet": "VENTAS_COPA",
     "Z1-Ventas actualizable S4.parquet": "VENTAS_S4",
     "Z1-Ventas actualizable SD.parquet": "VENTAS_SD",
-    "Z1-Ventas actualizable TERCEROS.parquet": "VENTAS_TERCEROS"
+    "Z1-Ventas actualizable TERCEROS.parquet": "VENTAS_TERCEROS",
+    "1C-V-Canal distribucion.parquet":"CANAL_DIST",
+    "1C-V-Centro.parquet":"CENTRO",
+    "1C-V-Gpo articulo Mat equivalente.parquet":"GPO_ART_MAT_EQ",
+    "1C-V-Material.parquet":"MATERIAL",
+    "1C-V-Mercado.parquet":"MERCADO",
+    "1C-V-Organizacion de ventas.parquet":"ORG_VENTAS",
+    "1C-V-Sociedad.parquet":"SOCIEDAD",
+    "1C-V-Solicitante.parquet":"SOLICITANTE",
+    "2B-G-Gastos.parquet":"GASTOS",
+    "2C-G-Ceco Cefin.parquet":"CECO_CEFIN",
+    "2C-G-Ceco.parquet":"CECO",
+    "2C-G-ClCo Cefin.parquet":"CLCO_CEFIN",
+    "2C-G-ClCo.parquet":"CLCO",
+    "2C-G-InfoObjeto para CeClCo.parquet":"INFOOBJETO_CECLCO",
+    "2C-G-Sociedad FI Gasto.parquet":"SOCIEDAD_FI_GASTO",
+    "Gastos Ajuste.parquet":"GASTOS_AJUSTES"
 }
 
 @functions_framework.cloud_event
@@ -57,7 +73,7 @@ def parquet_CS_to_BQ(cloud_event):
 
     def CS_to_BQ(file_name, table_id_name):
         """Carga tablas a BigQuery a partir de archivos Parquet"""
-        client = bigquery.Client()
+        client = bigquery.Client(project=PROJECT_ID)
         table_id = f"{PROJECT_ID}.{DATASET_ID}.{table_id_name}"
         gcs_uri = rename_columns_parquet(BUCKET_NAME, file_name)
         job_config = bigquery.LoadJobConfig(
